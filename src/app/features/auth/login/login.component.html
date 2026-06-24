@@ -1,0 +1,93 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <div class="auth-form-side">
+      <div class="form-wrapper">
+        <div class="brand">
+          <div class="brand-logo">
+            <span class="brand-dot"></span>
+          </div>
+          <span class="brand-name">SMART RH</span>
+        </div>
+
+        <h1>Bon retour</h1>
+        <p class="subtitle">Connectez-vous à votre espace</p>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="email">Email professionnel</label>
+            <input id="email" type="email" formControlName="email" placeholder="sami@smartrh.com" />
+            @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+              <span class="error">Email valide requis</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="password">Mot de passe</label>
+            <input id="password" type="password" formControlName="password" placeholder="••••••••••" />
+            @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+              <span class="error">Mot de passe requis</span>
+            }
+          </div>
+
+          @if (errorMessage) {
+            <div class="error-message">{{ errorMessage }}</div>
+          }
+
+          <button type="submit" class="btn-primary" [disabled]="loginForm.invalid || isLoading">
+            {{ isLoading ? 'Connexion...' : 'Se connecter' }}
+          </button>
+
+          <div class="divider">
+            <span class="divider-line"></span>
+            <span class="divider-text">ou</span>
+            <span class="divider-line"></span>
+          </div>
+
+          <p class="switch-link">
+            Pas de compte ? <a routerLink="/register">Créer un compte</a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <div class="auth-visual-side">
+      <svg class="visual-bg" viewBox="0 0 400 520" preserveAspectRatio="none">
+        <defs>
+          <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M40 0 L0 0 0 40" fill="none" stroke="white" stroke-width="0.5" opacity="0.06"/>
+          </pattern>
+        </defs>
+        <rect width="400" height="520" fill="url(#grid)"/>
+        <circle cx="370" cy="40" r="120" fill="#A78BFA" opacity="0.3"/>
+        <rect x="250" y="30" width="100" height="100" rx="20" fill="#C4B5FD" opacity="0.25" transform="rotate(15 300 80)"/>
+        <polygon points="340,280 410,400 270,400" fill="#5B21B6" opacity="0.4"/>
+        <circle cx="40" cy="440" r="90" fill="#5B21B6" opacity="0.45"/>
+        <circle cx="40" cy="440" r="50" fill="#A78BFA" opacity="0.3"/>
+        <rect x="-20" y="180" width="70" height="70" rx="16" fill="#FBBF24" opacity="0.2" transform="rotate(-10 15 215)"/>
+        <circle cx="320" cy="200" r="6" fill="#FBBF24" opacity="0.7"/>
+        <circle cx="80" cy="100" r="4" fill="white" opacity="0.5"/>
+        <circle cx="350" cy="350" r="5" fill="white" opacity="0.4"/>
+      </svg>
+
+      <div class="visual-content">
+        <div class="visual-icon">
+          <div class="magnifier">
+            <span class="magnifier-handle"></span>
+          </div>
+        </div>
+        <p class="eyebrow">Plateforme RH intelligente</p>
+        <h2>Trouvez le bon<br />candidat, plus vite</h2>
+        <p class="tagline">Recherche sémantique par IA et pipeline de recrutement, dans un seul outil.</p>
+
+        <div class="social-proof">
+          <div class="avatar avatar-1"></div>
+          <div class="avatar avatar-2"></div>
+          <div class="avatar avatar-3"></div>
+          <span class="social-text">+200 recruteurs actifs</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
