@@ -1,0 +1,94 @@
+<div class="page-header">
+  <p class="eyebrow">Recrutement</p>
+  <h1>Vivier de CVs</h1>
+  <p class="subtitle">Centralisez et gérez vos candidatures</p>
+</div>
+
+<div class="upload-card">
+  <div
+    class="dropzone"
+    [class.drag-over]="isDragOver"
+    (dragover)="onDragOver($event)"
+    (dragleave)="onDragLeave()"
+    (drop)="onDrop($event)"
+  >
+    @if (!selectedFile) {
+      <div class="dropzone-content">
+        <div class="upload-icon">📤</div>
+        <p class="dropzone-title">Glissez un CV ici, ou</p>
+        <label class="btn-browse">
+          Parcourir
+          <input type="file" accept=".pdf,.docx" (change)="onFileSelected($event)" hidden />
+        </label>
+        <p class="dropzone-hint">Formats acceptés : PDF, DOCX</p>
+      </div>
+    } @else {
+      <div class="file-selected">
+        <span class="file-icon">📄</span>
+        <span class="file-name">{{ selectedFile.name }}</span>
+        <button class="file-remove" (click)="removeSelectedFile()">×</button>
+      </div>
+    }
+  </div>
+
+  @if (selectedFile) {
+    <div class="upload-options">
+      <div class="form-group">
+        <label>Source du candidat</label>
+        <select [(ngModel)]="selectedSource">
+          @for (s of sources; track s) {
+            <option [value]="s">{{ s }}</option>
+          }
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Commentaire (optionnel)</label>
+        <input type="text" [(ngModel)]="commentaire" placeholder="Note rapide sur ce candidat..." />
+      </div>
+      <button class="btn-primary" (click)="uploadCv()" [disabled]="isUploading">
+        {{ isUploading ? 'Envoi en cours...' : 'Ajouter au vivier' }}
+      </button>
+    </div>
+  }
+
+  @if (errorMessage) {
+    <div class="alert alert-error">{{ errorMessage }}</div>
+  }
+  @if (successMessage) {
+    <div class="alert alert-success">{{ successMessage }}</div>
+  }
+</div>
+
+<div class="vivier-section">
+  <h2>{{ cvs.length }} CV(s) dans le vivier</h2>
+
+  @if (isLoading) {
+    <div class="empty-state">Chargement...</div>
+  } @else if (cvs.length === 0) {
+    <div class="empty-state">Aucun CV dans le vivier pour le moment.</div>
+  } @else {
+    <div class="cv-grid">
+      @for (cv of cvs; track cv.id) {
+        <div class="cv-card">
+          @if (cv.doublonPotentiel) {
+            <span class="doublon-tag">⚠ Doublon potentiel</span>
+          }
+          <div class="cv-card-header">
+            <div class="cv-avatar">{{ cv.nomCandidat.charAt(0) }}</div>
+            <div>
+              <h3>{{ cv.nomCandidat }}</h3>
+              <p class="cv-source">{{ cv.source }}</p>
+            </div>
+          </div>
+          @if (cv.emailCandidat) {
+            <p class="cv-detail">✉ {{ cv.emailCandidat }}</p>
+          }
+          @if (cv.telephoneCandidat) {
+            <p class="cv-detail">📞 {{ cv.telephoneCandidat }}</p>
+          }
+          <p class="cv-date">Ajouté le {{ cv.dateUpload }}</p>
+        </div>
+      }
+    </div>
+  }
+</div>

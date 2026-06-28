@@ -1,0 +1,91 @@
+<div class="page-header">
+  <div>
+    <p class="eyebrow">Recrutement</p>
+    <h1>{{ isEditMode ? 'Modifier la demande' : 'Nouvelle demande' }}</h1>
+    <p class="subtitle">Renseignez les informations du poste à pourvoir</p>
+  </div>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-card">
+
+  <div class="form-group">
+    <label>Intitulé du poste</label>
+    <input formControlName="titre" placeholder="Ex: Développeur Java Senior" />
+  </div>
+
+  <div class="form-group">
+    <label>Description / missions</label>
+    <textarea formControlName="description" rows="4" placeholder="Décrivez le poste et les missions..."></textarea>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Niveau d'expérience</label>
+      <select formControlName="niveauExperience">
+        <option value="JUNIOR">Junior</option>
+        <option value="CONFIRME">Confirmé</option>
+        <option value="SENIOR">Senior</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Date de besoin</label>
+      <input type="date" formControlName="dateBesoin" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label class="checkbox-label">
+      <input type="checkbox" formControlName="urgence" />
+      Demande urgente
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label>Compétences requises</label>
+    <div class="tag-input-row">
+      <input
+        [(ngModel)]="competenceRequiseInput"
+        [ngModelOptions]="{standalone: true}"
+        (keydown.enter)="$event.preventDefault(); ajouterCompetenceRequise()"
+        placeholder="Ex: Java, Spring Boot... (Entrée pour ajouter)"
+      />
+      <button type="button" class="btn-add" (click)="ajouterCompetenceRequise()">Ajouter</button>
+    </div>
+    <div class="tags">
+      @for (comp of competencesRequises; track comp) {
+        <span class="tag">{{ comp }} <span class="tag-remove" (click)="retirerCompetenceRequise(comp)">×</span></span>
+      }
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>Compétences souhaitées (optionnel)</label>
+    <div class="tag-input-row">
+      <input
+        [(ngModel)]="competenceSouhaiteeInput"
+        [ngModelOptions]="{standalone: true}"
+        (keydown.enter)="$event.preventDefault(); ajouterCompetenceSouhaitee()"
+        placeholder="Ex: Docker, AWS... (Entrée pour ajouter)"
+      />
+      <button type="button" class="btn-add" (click)="ajouterCompetenceSouhaitee()">Ajouter</button>
+    </div>
+    <div class="tags">
+      @for (comp of competencesSouhaitees; track comp) {
+        <span class="tag tag-light">{{ comp }} <span class="tag-remove" (click)="retirerCompetenceSouhaitee(comp)">×</span></span>
+      }
+    </div>
+  </div>
+
+  @if (errorMessage) {
+    <div class="error-message">{{ errorMessage }}</div>
+  }
+
+  <div class="form-actions">
+    <a routerLink="/demandes" class="btn-secondary">Annuler</a>
+    <button type="submit" class="btn-primary" [disabled]="isLoading">
+      {{ isLoading ? 'Enregistrement...' : (isEditMode ? 'Enregistrer' : 'Créer la demande') }}
+    </button>
+  </div>
+
+</form>

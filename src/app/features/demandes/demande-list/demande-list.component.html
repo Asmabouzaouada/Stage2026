@@ -1,0 +1,45 @@
+<div class="page-header">
+  <div>
+    <p class="eyebrow">Recrutement</p>
+    <h1>Demandes de recrutement</h1>
+    <p class="subtitle">Gérez vos besoins en profils</p>
+  </div>
+  <a routerLink="/demandes/nouvelle" class="btn-primary">+ Nouvelle demande</a>
+</div>
+
+@if (isLoading) {
+  <div class="empty-state">Chargement...</div>
+} @else if (errorMessage) {
+  <div class="empty-state error">{{ errorMessage }}</div>
+} @else if (demandes.length === 0) {
+  <div class="empty-state">
+    <p>Aucune demande pour le moment.</p>
+    <a routerLink="/demandes/nouvelle" class="btn-primary">Créer votre première demande</a>
+  </div>
+} @else {
+  <div class="demandes-grid">
+    @for (demande of demandes; track demande.id) {
+      <div class="demande-card" (click)="goToEdit(demande.id)">
+        <div class="demande-card-header">
+          <span class="badge" [class]="statutClass(demande.statut)">{{ statutLabel(demande.statut) }}</span>
+          @if (demande.urgence) {
+            <span class="urgent-tag">Urgent</span>
+          }
+        </div>
+        <h3>{{ demande.titre }}</h3>
+        <p class="demande-meta">{{ demande.niveauExperience }} · Besoin pour le {{ demande.dateBesoin }}</p>
+        <div class="competences">
+          @for (comp of demande.competencesRequises; track comp) {
+            <span class="competence-tag">{{ comp }}</span>
+          }
+        </div>
+        <div class="demande-footer">
+          <span class="demandeur">Demandeur : {{ demande.demandeurNom }}</span>
+          @if (demande.statut !== 'ANNULEE' && demande.statut !== 'CLOTUREE') {
+            <button class="btn-cancel" (click)="annuler(demande.id, $event)">Annuler</button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+}

@@ -1,0 +1,238 @@
+.page-header {
+  margin-bottom: 24px;
+}
+
+.eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin: 0 0 6px;
+}
+
+.page-header h1 {
+  font-size: 24px;
+  color: var(--color-text-dark);
+  margin-bottom: 4px;
+}
+
+.subtitle {
+  font-size: 13.5px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.upload-card {
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 32px;
+}
+
+.dropzone {
+  border: 2px dashed var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 32px;
+  text-align: center;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.dropzone.drag-over {
+  border-color: var(--color-primary);
+  background: #F4F2FB;
+}
+
+.upload-icon {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.dropzone-title {
+  font-size: 13.5px;
+  color: var(--color-text-dark);
+  margin: 0 0 12px;
+}
+
+.btn-browse {
+  display: inline-block;
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  padding: 9px 18px;
+  font-size: 12.5px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.dropzone-hint {
+  font-size: 11.5px;
+  color: var(--color-text-placeholder);
+  margin: 10px 0 0;
+}
+
+.file-selected {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.file-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+}
+
+.file-remove {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+}
+
+.upload-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+  margin-top: 16px;
+}
+
+.form-group label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-dark);
+  display: block;
+  margin-bottom: 6px;
+}
+
+select, input[type="text"] {
+  width: 100%;
+  border: 2px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.alert {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  font-size: 13px;
+}
+
+.alert-error {
+  background: #FEF2F2;
+  color: #DC2626;
+}
+
+.alert-success {
+  background: #F0FDF4;
+  color: #15803D;
+}
+
+.vivier-section h2 {
+  font-size: 16px;
+  color: var(--color-text-dark);
+  margin-bottom: 16px;
+}
+
+.empty-state {
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-lg);
+  padding: 40px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+}
+
+.cv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+
+.cv-card {
+  background: white;
+  border: 1px solid var(--color-border-light);
+  border-radius: 14px;
+  padding: 16px;
+  position: relative;
+}
+
+.doublon-tag {
+  display: inline-block;
+  font-size: 10.5px;
+  font-weight: 700;
+  color: #D97706;
+  background: #FFFBEB;
+  padding: 3px 8px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.cv-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.cv-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.cv-card h3 {
+  font-size: 13.5px;
+  color: var(--color-text-dark);
+  margin: 0 0 2px;
+}
+
+.cv-source {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.cv-detail {
+  font-size: 12px;
+  color: var(--color-text-label);
+  margin: 4px 0;
+}
+
+.cv-date {
+  font-size: 11px;
+  color: var(--color-text-placeholder);
+  margin: 8px 0 0;
+}

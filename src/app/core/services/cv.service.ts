@@ -1,0 +1,40 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { CvResponse, SourceCandidat } from '../models/cv.model';
+@Injectable({ providedIn: 'root' })
+export class CvService {
+  private apiUrl = 'http://localhost:8080/api/cvs';
+
+  constructor(private http: HttpClient) {}
+
+  upload(file: File, source: SourceCandidat, demandeId?: number, commentaire?: string): Observable<CvResponse> {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('source', source);
+    if (demandeId) formData.append('demandeId', demandeId.toString());
+    if (commentaire) formData.append('commentaire', commentaire);
+
+    return this.http.post<CvResponse>(`${this.apiUrl}/upload`, formData);
+  }
+
+  getVivierGeneral(): Observable<CvResponse[]> {
+    return this.http.get<CvResponse[]>(`${this.apiUrl}/vivier`);
+  }
+
+  getByDemande(demandeId: number): Observable<CvResponse[]> {
+    return this.http.get<CvResponse[]>(`${this.apiUrl}/demande/${demandeId}`);
+  }
+
+  rattacherADemande(cvId: number, demandeId: number): Observable<CvResponse> {
+    return this.http.patch<CvResponse>(`${this.apiUrl}/${cvId}/rattacher/${demandeId}`, {});
+  }
+
+  ajouterAuVivier(cvId: number): Observable<CvResponse> {
+    return this.http.patch<CvResponse>(`${this.apiUrl}/${cvId}/ajouter-vivier`, {});
+  }
+
+  delete(cvId: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${cvId}`);
+  }
+}

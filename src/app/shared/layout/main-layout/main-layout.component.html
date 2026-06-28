@@ -1,0 +1,41 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-logo">
+        <span class="brand-dot"></span>
+      </div>
+      <span class="brand-name">SMART RH</span>
+    </div>
+
+    <nav class="nav-menu">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">⬜</span>
+        Tableau de bord
+      </a>
+      <a routerLink="/demandes" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📋</span>
+        Demandes
+      </a>
+      <a routerLink="/cvs" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📄</span>
+        Vivier de CVs
+      </a>
+      <a routerLink="/pipeline" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">🗂</span>
+        Pipeline
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar">{{ userName.charAt(0) }}</div>
+        <span class="user-name">{{ userName }}</span>
+      </div>
+      <button class="logout-btn" (click)="logout()">Déconnexion</button>
+    </div>
+  </aside>
+
+  <main class="content">
+    <router-outlet></router-outlet>
+  </main>
+</div>
