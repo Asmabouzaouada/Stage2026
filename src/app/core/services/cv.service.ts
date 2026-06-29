@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CvResponse, SourceCandidat } from '../models/cv.model';
+import { environment } from '../../../environments/environment.prod';
 @Injectable({ providedIn: 'root' })
 export class CvService {
-  private apiUrl = 'http://localhost:8080/api/cvs';
+  private apiUrl = `${environment.apiUrl}/cvs`;
 
   constructor(private http: HttpClient) {}
 

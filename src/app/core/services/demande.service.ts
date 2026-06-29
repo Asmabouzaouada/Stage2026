@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { DemandeRequest, DemandeResponse, StatutDemande } from '../models/demande.model';
+import { environment } from '../../../environments/environment.prod';
 
 @Injectable({ providedIn: 'root' })
 export class DemandeService {
-  private apiUrl = 'http://localhost:8080/api/demandes';
+  private apiUrl = `${environment.apiUrl}/demandes`;
 
   constructor(private http: HttpClient) {}
 
