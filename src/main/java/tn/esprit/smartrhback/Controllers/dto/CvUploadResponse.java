@@ -25,4 +25,5 @@ public class CvUploadResponse {
     private String demandeTitre;
     private LocalDate dateUpload;
     private boolean doublonPotentiel;
+    private String texteExtrait;
 }

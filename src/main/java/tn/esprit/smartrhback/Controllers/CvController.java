@@ -139,7 +139,36 @@ public class CvController {
                 cv.getDemande() != null ? cv.getDemande().getId() : null,
                 cv.getDemande() != null ? cv.getDemande().getTitre() : null,
                 cv.getDateUpload(),
-                doublon
+                doublon,
+                cv.getTexteExtrait()
         );
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<CvUploadResponse> getById(@PathVariable Long id) {
+        return cvRepository.findById(id)
+                .map(cv -> ResponseEntity.ok(toResponse(cv, false)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping("/{id}/download")
+    public ResponseEntity<org.springframework.core.io.Resource> download(@PathVariable Long id) throws java.io.IOException {
+        Cv cv = cvRepository.findById(id).orElseThrow();
+
+        java.nio.file.Path path = java.nio.file.Paths.get(cv.getFichierPath());
+        org.springframework.core.io.Resource resource = new org.springframework.core.io.UrlResource(path.toUri());
+
+        if (!resource.exists()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        String contentType = cv.getNomFichierOriginal().toLowerCase().endsWith(".pdf")
+                ? "application/pdf"
+                : "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+        return ResponseEntity.ok()
+                .contentType(org.springframework.http.MediaType.parseMediaType(contentType))
+                .header(org.springframework.http.HttpHeaders.CONTENT_DISPOSITION,
+                        "attachment; filename=\"" + cv.getNomFichierOriginal() + "\"")
+                .body(resource);
     }
 }
