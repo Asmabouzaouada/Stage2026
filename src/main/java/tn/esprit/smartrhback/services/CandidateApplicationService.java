@@ -43,6 +43,17 @@ public class CandidateApplicationService {
         return toResponse(app);
     }
 
+    /**
+     * Assigne automatiquement le pipeline par défaut (entrée à l'étape RH) lorsqu'un CV
+     * est rattaché à une demande. Idempotent : si une candidature existe déjà pour ce
+     * couple CV/demande, elle est simplement renvoyée sans en recréer une nouvelle.
+     */
+    public CandidateApplicationResponse getOrCreateApplication(Long cvId, Long demandeId) {
+        return applicationRepository.findByCvIdAndDemandeId(cvId, demandeId)
+                .map(this::toResponse)
+                .orElseGet(() -> createApplication(cvId, demandeId));
+    }
+
     public List<CandidateApplicationResponse> getByDemande(Long demandeId) {
         return applicationRepository.findByDemandeId(demandeId)
                 .stream().map(this::toResponse).collect(Collectors.toList());

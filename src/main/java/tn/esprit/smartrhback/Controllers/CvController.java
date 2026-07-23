@@ -25,6 +25,7 @@ public class CvController {
     @Autowired private DemandeRecrutementRepository demandeRepository;
     @Autowired private UserRepository userRepository;
     @Autowired private CvParsingService parsingService;
+    @Autowired private tn.esprit.smartrhback.services.CandidateApplicationService candidateApplicationService;
 
     private final String UPLOAD_DIR = "uploads/cvs/";
 
@@ -76,6 +77,12 @@ public class CvController {
 
             cvRepository.save(cv);
 
+            // Le CV est directement assigné à une demande : il entre automatiquement
+            // dans le pipeline par défaut (étape RH).
+            if (demandeId != null) {
+                candidateApplicationService.getOrCreateApplication(cv.getId(), demandeId);
+            }
+
             return ResponseEntity.ok(toResponse(cv, doublon));
 
         } catch (IOException e) {
@@ -107,6 +114,10 @@ public class CvController {
         DemandeRecrutement demande = demandeRepository.findById(demandeId).orElseThrow();
         cv.setDemande(demande);
         cvRepository.save(cv);
+
+        // Assignation du CV à une demande = entrée automatique dans le pipeline par défaut (étape RH).
+        candidateApplicationService.getOrCreateApplication(id, demandeId);
+
         return ResponseEntity.ok(toResponse(cv, false));
     }
 

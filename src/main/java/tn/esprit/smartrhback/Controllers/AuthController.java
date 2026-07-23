@@ -46,11 +46,16 @@ public class AuthController {
 
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
 
+        java.util.List<String> roles = user.getRoles().stream()
+                .map(role -> role.getName())
+                .collect(java.util.stream.Collectors.toList());
+
         AuthResponse response = new AuthResponse(
                 token,
                 user.getEmail(),
                 user.getFirstName(),
                 user.getLastName()
+                //roles
         );
 
         return ResponseEntity.ok(response);

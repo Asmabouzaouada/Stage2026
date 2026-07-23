@@ -11,4 +11,5 @@ public interface CandidateApplicationRepository extends JpaRepository<CandidateA
     List<CandidateApplication> findByDemandeId(Long demandeId);
     List<CandidateApplication> findByStage(PipelineStage stage);
     List<CandidateApplication> findByCvId(Long cvId);
+    java.util.Optional<CandidateApplication> findByCvIdAndDemandeId(Long cvId, Long demandeId);
 }
