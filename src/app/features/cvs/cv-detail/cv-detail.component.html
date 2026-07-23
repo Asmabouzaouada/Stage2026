@@ -1,0 +1,76 @@
+@if (isLoading) {
+  <div class="empty-state">Chargement...</div>
+} @else if (errorMessage) {
+  <div class="empty-state error">{{ errorMessage }}</div>
+} @else if (cv) 
+{
+
+  <div class="page-header">
+    <a routerLink="/cvs" class="back-link">← Retour au vivier</a>
+    <div class="header-row">
+      <div class="candidate-info">
+        <div class="avatar">{{ cv.nomCandidat.charAt(0) }}</div>
+        <div>
+          <h1>{{ cv.nomCandidat }}</h1>
+          <p class="subtitle">{{ cv.source }} · Ajouté le {{ cv.dateUpload }}</p>
+        </div>
+      </div>
+      <button class="btn-primary" (click)="downloadCv()" [disabled]="isDownloading">
+        {{ isDownloading ? 'Téléchargement...' : '⬇ Télécharger le CV' }}
+      </button>
+    </div>
+  </div>
+
+  @if (cv.doublonPotentiel) {
+    <div class="alert alert-warning">⚠ Doublon potentiel détecté pour ce candidat</div>
+  }
+
+  <div class="detail-grid">
+
+    <div class="detail-card">
+      <h2>Coordonnées</h2>
+      <div class="info-row">
+        <span class="info-label">Email</span>
+        <span class="info-value">{{ cv.emailCandidat || 'Non détecté' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Téléphone</span>
+        <span class="info-value">{{ cv.telephoneCandidat || 'Non détecté' }}</span>
+      </div>
+      <div class="info-row">
+        <span class="info-label">Demande liée</span>
+        <span class="info-value">{{ cv.demandeTitre || 'Vivier général (aucune)' }}</span>
+      </div>
+    </div>
+
+    <div class="detail-card">
+      <h2>Formation</h2>
+      <p class="text-block">{{ cv.formationDetectee || 'Aucune information détectée automatiquement.' }}</p>
+    </div>
+
+    <div class="detail-card">
+      <h2>Expériences</h2>
+      <p class="text-block">{{ cv.experiencesDetectees || 'Aucune information détectée automatiquement.' }}</p>
+    </div>
+
+    <div class="detail-card detail-card-full">
+      <h2>Texte complet extrait du CV</h2>
+      <p class="text-block text-block-full">{{ cv.texteExtrait }}</p>
+    </div>
+
+  </div>
+<div class="detail-card" style="margin-top: 16px">
+  <h2>Associer à une demande</h2>
+  <div style="display:flex; gap:10px; align-items:center">
+    <input
+      type="number"
+      #demandeInput
+      placeholder="ID de la demande"
+      style="border:2px solid var(--color-border-light); border-radius:var(--radius-md); padding:10px 14px; font-size:13px; font-family:inherit; width:180px"
+    />
+    <button class="btn-primary" (click)="associerADemande(+demandeInput.value)">
+      Associer et voir le pipeline
+    </button>
+  </div>
+</div>
+}

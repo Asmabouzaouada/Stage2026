@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CvResponse, SourceCandidat } from '../models/cv.model';
-import { environment } from '../../../environments/environment.prod';
+import { environment } from '../../../environments/environment';
+
 @Injectable({ providedIn: 'root' })
 export class CvService {
   private apiUrl = `${environment.apiUrl}/cvs`;
@@ -23,6 +24,10 @@ export class CvService {
     return this.http.get<CvResponse[]>(`${this.apiUrl}/vivier`);
   }
 
+  getById(id: number): Observable<CvResponse> {
+    return this.http.get<CvResponse>(`${this.apiUrl}/${id}`);
+  }
+
   getByDemande(demandeId: number): Observable<CvResponse[]> {
     return this.http.get<CvResponse[]>(`${this.apiUrl}/demande/${demandeId}`);
   }
@@ -33,6 +38,10 @@ export class CvService {
 
   ajouterAuVivier(cvId: number): Observable<CvResponse> {
     return this.http.patch<CvResponse>(`${this.apiUrl}/${cvId}/ajouter-vivier`, {});
+  }
+
+  download(cvId: number): Observable<Blob> {
+    return this.http.get(`${this.apiUrl}/${cvId}/download`, { responseType: 'blob' });
   }
 
   delete(cvId: number): Observable<void> {

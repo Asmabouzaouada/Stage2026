@@ -7,7 +7,8 @@ import { authGuard } from './core/guards/auth.guard';
 import { DemandeListComponent } from './features/demandes/demande-list/demande-list.component';
 import { DemandeFormComponent } from './features/demandes/demande-form/demande-form.component';
 import { CvListComponent } from './features/cvs/cv-list/cv-list.component';
-
+import { CvDetailComponent } from './features/cvs/cv-detail/cv-detail.component';
+import { KanbanBoardComponent } from './features/pipeline/kanban-board/kanban-board.component';
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -22,7 +23,10 @@ export const routes: Routes = [
       { path: 'demandes', component: DemandeListComponent },
 { path: 'demandes/nouvelle', component: DemandeFormComponent },
 { path: 'demandes/:id/modifier', component: DemandeFormComponent },
-{ path: 'cvs', component: CvListComponent }
+{ path: 'cvs/:id', component: CvDetailComponent },
+{ path: 'cvs', component: CvListComponent },
+{ path: 'pipeline/:demandeId', component: KanbanBoardComponent },
+{ path: 'pipeline', component: KanbanBoardComponent },
     ]
   },
 

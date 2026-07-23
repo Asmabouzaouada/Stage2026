@@ -14,4 +14,5 @@ export interface CvResponse {
   demandeTitre: string | null;
   dateUpload: string;
   doublonPotentiel: boolean;
+  texteExtrait: string;
 }

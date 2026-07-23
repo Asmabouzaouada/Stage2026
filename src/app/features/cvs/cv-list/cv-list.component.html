@@ -69,7 +69,7 @@
   } @else {
     <div class="cv-grid">
       @for (cv of cvs; track cv.id) {
-        <div class="cv-card">
+        <div class="cv-card" [routerLink]="['/cvs', cv.id]">
           @if (cv.doublonPotentiel) {
             <span class="doublon-tag">⚠ Doublon potentiel</span>
           }

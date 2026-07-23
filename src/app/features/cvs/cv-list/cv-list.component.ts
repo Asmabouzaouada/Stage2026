@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CvService } from '../../../core/services/cv.service';
 import { CvResponse, SourceCandidat } from '../../../core/models/cv.model';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-cv-list',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './cv-list.component.html',
   styleUrl: './cv-list.component.css'
 })

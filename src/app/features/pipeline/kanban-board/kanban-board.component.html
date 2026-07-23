@@ -1,0 +1,70 @@
+<div class="page-header">
+  <p class="eyebrow">Recrutement</p>
+  <h1>Pipeline de recrutement</h1>
+  <p class="subtitle">Suivez l'avancement des candidats</p>
+</div>
+
+@if (isLoading) {
+  <div class="empty-state">Chargement...</div>
+} @else if (errorMessage) {
+  <div class="empty-state error">{{ errorMessage }}</div>
+} @else {
+
+  <div class="kanban-board">
+    @for (col of columns; track col.stage) {
+      <div class="kanban-column" [class]="col.color">
+        <div class="column-header">
+          <span class="column-title">{{ col.label }}</span>
+          <span class="column-count">{{ getByStage(col.stage).length }}</span>
+        </div>
+        <div class="column-body">
+          @for (app of getByStage(col.stage); track app.id) {
+            <app-kanban-card
+              [application]="app"
+              (decisionClicked)="openDecisionModal(app)">
+            </app-kanban-card>
+          }
+          @if (getByStage(col.stage).length === 0) {
+            <div class="empty-column">Aucun candidat</div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+}
+
+@if (showModal && selectedApp) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h2>Décision — {{ selectedApp.nomCandidat }}</h2>
+        <button class="modal-close" (click)="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>Décision</label>
+          <div class="decision-buttons">
+            @for (d of decisionsForStage(selectedApp.stage); track d) {
+              <button
+                class="decision-btn"
+                [class.active]="selectedDecision === d"
+                [class]="'decision-btn decision-btn-' + d.toLowerCase()"
+                (click)="selectedDecision = d">
+                {{ d === 'GO' ? '✓ Go' : d === 'NO_GO' ? '✗ No Go' : '⏸ Garder en vivier' }}
+              </button>
+            }
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Commentaire (optionnel)</label>
+          <textarea [(ngModel)]="comment" rows="3" placeholder="Votre commentaire..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="closeModal()">Annuler</button>
+        <button class="btn-primary" (click)="submitDecision()">Confirmer</button>
+      </div>
+    </div>
+  </div>
+}

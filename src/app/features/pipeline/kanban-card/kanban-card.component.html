@@ -1,0 +1,27 @@
+<div class="card">
+  <div class="card-header">
+    <div class="avatar">{{ application.nomCandidat.charAt(0) }}</div>
+    <div>
+      <p class="candidate-name">{{ application.nomCandidat }}</p>
+      <p class="candidate-email">{{ application.emailCandidat }}</p>
+    </div>
+  </div>
+
+  @if (application.matchingScore > 0) {
+    <div class="score-bar">
+      <div class="score-fill" [style.width.%]="application.matchingScore"></div>
+      <span class="score-label">{{ application.matchingScore }}%</span>
+    </div>
+  }
+
+  <div class="card-footer">
+    <span class="decision-badge" [class]="'badge-' + application.decision.toLowerCase()">
+      {{ application.decision === 'PENDING' ? 'En attente' :
+         application.decision === 'GO' ? 'Go' :
+         application.decision === 'NO_GO' ? 'No Go' : 'En vivier' }}
+    </span>
+    @if (application.stage !== 'HIRED' && application.stage !== 'VIVIER') {
+      <button class="btn-action" (click)="decisionClicked.emit()">Décider</button>
+    }
+  </div>
+</div>
